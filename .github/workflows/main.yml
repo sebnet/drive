@@ -13,9 +13,9 @@ jobs:
         site: [diskever,diskever2]
         include:
           - site: diskever
-            publish-profile: ${{ secrets.PP_DISKEVER}}
+            publish-profile: PP_DISKEVER
           - site: diskever2
-            publish-profile: ${{ secrets.PP_DISKEVER2}}
+            publish-profile: PP_DISKEVER2
 
     steps:
     - uses: actions/checkout@master
@@ -36,5 +36,5 @@ jobs:
       with:
         app-name: ${{matrix.site}}
         slot-name: 'production'
-        publish-profile: ${{matrix.publish-profile}}
+        publish-profile: ${{ secrets[matrix.publish-profile]}}
         package: ${{env.DOTNET_ROOT}}/myapp 
