@@ -9,6 +9,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         site: [diskever,diskever2]
         include:
