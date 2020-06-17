@@ -10,18 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     
     strategy:
-    matrix:
-      auto-deploy:[
-                    {
-                      "site-name":"diskever",
-                      "publish-profile":${{ secrets.AzureAppService_PublishProfile_88e2b7eaad20492c8558822ba5983891 }}
-                    },
-                     {
-                      "site-name":"diskever2",
-                      "publish-profile":${{ secrets.AzureAppService_PublishProfile_88e2b7eaad20492c8558822ba5983891 }}
-                    }
-                  ]
-                    
+      matrix:
+      sites:[diskever,diskever2]
+      include:
+      -sites: diskever
+       publish-profile: ${{ secrets.AzureAppService_PublishProfile_88e2b7eaad20492c8558822ba5983891}}
+     include:
+      -sites: diskever2
+       publish-profile: ${{ secrets.AzureAppService_PublishProfile_88e2b7eaad20492c8558822ba5983891}}
 
     steps:
     - uses: actions/checkout@master
