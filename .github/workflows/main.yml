@@ -13,9 +13,9 @@ jobs:
         site: [diskever,diskever2]
         include:
           - site: diskever
-            publish-profile: ${{ secrets.pp_diskever}}
+            publish-profile: ${{secrets.pp_diskever}}
           - site: diskever2
-            publish-profile: ${{ secrets.pp_diskever2}}
+            publish-profile: ${{secrets.pp_diskever2}}
 
     steps:
     - uses: actions/checkout@master
