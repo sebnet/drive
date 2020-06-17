@@ -38,6 +38,3 @@ jobs:
         slot-name: 'production'
         publish-profile: ${{matrix.publish-profile}}
         package: ${{env.DOTNET_ROOT}}/myapp 
-
-
-Back

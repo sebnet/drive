@@ -1,0 +1,53 @@
+
+ Deployment Center
+App Service Deployment Center enables you to choose the location of your code as well as options for build and deployment to the cloud. Learn more
+SOURCE CONTROL
+BUILD PROVIDER
+CONFIGURE
+SUMMARY
+SOURCE CONTROL
+Repositoryhttps://github.com/sebnet/drive
+Branchmaster
+BUILD PROVIDER
+ProviderGitHub Actions (Preview)
+GitHub Action Workflow Filenamemaster_diskever.yml
+GITHUB ACTION WORKFLOW CONFIGURATION
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy ASP.Net Core app to Azure Web App - diskever
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.102'
+
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+
+    - name: dotnet publish
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v1
+      with:
+        app-name: 'diskever'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_88e2b7eaad20492c8558822ba5983891 }}
+        package: ${{env.DOTNET_ROOT}}/myapp 
+
+
+Back
+Finish
