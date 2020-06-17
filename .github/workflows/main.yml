@@ -1,0 +1,50 @@
+name: Build and deploy ASP.Net Core app to Azure Web App - diskever
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    strategy:
+    matrix:
+      auto-deploy:[
+                    {
+                      "site-name":"diskever",
+                      "publish-profile":${{ secrets.AzureAppService_PublishProfile_88e2b7eaad20492c8558822ba5983891 }}
+                    },
+                     {
+                      "site-name":"diskever2",
+                      "publish-profile":${{ secrets.AzureAppService_PublishProfile_88e2b7eaad20492c8558822ba5983891 }}
+                    }
+                  ]
+                    
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.102'
+
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+
+    - name: dotnet publish
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+
+    - name: Deploy to Azure Web App ${{matrix.auto-deploy.site-name}}
+      uses: azure/webapps-deploy@v1
+      with:
+        app-name: ${{matrix.auto-deploy.site-name}}
+        slot-name: 'production'
+        publish-profile: ${{matrix.auto-deploy.publish-profile}}
+        package: ${{env.DOTNET_ROOT}}/myapp 
+
+
+Back
+Finish
