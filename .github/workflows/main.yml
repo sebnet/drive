@@ -1,10 +1,11 @@
 name: Build and deploy ASP.Net Core app to Azure Web App - diskever
 
 on:
-  push:
-    branches:
-      - master
-
+  #push:
+  #  branches:
+  #    - master
+  release:
+    types:[created]
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
